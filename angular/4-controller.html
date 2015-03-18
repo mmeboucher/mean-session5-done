@@ -1,0 +1,184 @@
+<html ng-app>
+
+<head>
+	<link rel="stylesheet" type="text/css" href="css/bootstrap.css">
+	<script type="text/javascript" src="js/angular.min.js"></script>
+	
+<!--
+	<script type="text/javascript" src="js/jquery.min.js"></script>
+
+-->
+
+
+	<script type="text/javascript" src="js/bootstrap.min.js"></script>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
+	<style type="text/css">
+	body { padding:50px; }
+	.panel-primary, .panel-default { width:30%; float:left; margin-right:2%; min-height:180px;}
+	.panel-name {
+		background-color: d6e9c6;
+		padding-left: 15px;
+	}
+	.cl { clear:both; }
+	input[type=text], textarea {
+		padding: 3px;
+		border-radius: 4px;
+		border: 1px solid rgba(0,0,0,0.2)
+	}
+	textarea { width: 100%; }
+
+	</style>
+
+</head>
+<body ng-controller="PortfolioListController">
+
+	<div class="panel panel-primary" ng-repeat="portfolio in portfolios">
+		<div class="panel-heading">
+			{{ portfolio.title }} {{ portfolio.date }}
+		</div>
+		<div class="panel-body">
+			{{ portfolio.description }}
+		</div>
+		<div class="panel-name">
+			{{ portfolio.name }}
+		</div>
+		<figure class="portfolio-image">
+      		<img ng-src="{{ portfolio.imageurl }}" alt="{{ portfolio.title }}">
+    	</figure>
+	</div>
+
+	<div class="cl">
+		<h3>Add a Portfolio</h3>
+		<div class="panel panel-default">
+			<form name="add_portfolio_form" novalidate>
+				<div class="panel-heading">
+					<div style="float:right">
+
+						<input  validate
+						ng-required="true"
+						required
+						ng-minlength="10"
+						name="date_entered"
+						type="date" 
+						placeholder="yyyy/mm/dd" 
+						size="10" 
+						ng-model="adding_portfolio.date" />
+
+<!-- none of these works 
+			min="2013-01-01" max="2013-12-31" 
+
+       placeholder="yyyy-MM-dd" min="2013-01-01" max="2013-12-31" required />
+   <span class="error" ng-show="myForm.input.$error.required">
+       Required!</span>
+   <span class="error" ng-show="myForm.input.$error.date">
+       Not a valid date!</span>
+
+            ng-show="signup_form.name.$dirty && signup_form.name.$invalid"> 
+-->
+		
+					</div>
+					<input type="text" placeholder="title" size="20" 						maxlength="30" name="title"
+						ng-model="adding_portfolio.title" />
+				</div>
+
+
+				<div class="panel-body">
+					<textarea placeholder="description" rows="4" ng-model="adding_portfolio.description" ></textarea>
+
+					<input type="text" placeholder="name" size="15" ng-model="adding_portfolio.name" />
+
+					<input type="text" placeholder="image url" size="30" ng-model="adding_portfolio.imageurl" />
+				</div>
+
+
+				<button ng-click="addPortfolio(adding_portfolio)" class="btn btn-success">Add Portfolio</button>
+		
+		<p id ="errormsg">&nbsp	</p>
+
+
+			</form>
+		</div>
+	</div>
+
+
+	<p class="cl">There are {{ portfolios.length }} portfolios available.</p>
+
+	<script type="text/javascript">
+	function PortfolioListController( $scope ){
+
+		$scope.portfolios = [
+		{name: 'vessel1309', title: 'Call of Booty', date: '2013-09-01', description: 'Arrrgh mateys! This be the finest vessel sailing these seas that yer eyes ever laid sight on. Arrrgh.', imageurl: '../site/images/drunkenPirate_thumb3.png' },
+
+		{name: 'innocents1404', title: 'The Sack of the Innocents', date: '2014-04-15', description: 'This be a detail of the sacking of the innocents where I played an important role as business analyst and in implementation.', imageurl: '../site/images/drunkenPirate_thumb2.png' },
+
+		{name: 'firstmate1210', title: 'Pipe and First Mate', date: '2012-10-01', description: 'After a hard day of lootin\' and shootin\' I like to relax with my best mates and tally up the days booty.', imageurl: '../site/images/drunkenPirate_thumb1.png' }
+		];
+
+
+
+		$scope.addPortfolio = function( new_portfolio ){
+			myerror = "";
+			validate();
+
+			if (myerror == "") {
+				console.log('creating new portfolio');
+
+				$scope.portfolios.push( new_portfolio );
+				$scope.adding_portfolio = {};
+			};
+		};
+
+	};
+
+
+function validate() {
+	var whichfield = "";
+	document.getElementById("errormsg").innerHTML = "";
+	var titletest = document.add_portfolio_form.title.value; 			
+    if (! titletest.match(/([A-z]+)/) ) {         
+		myerror="yes";
+		whichfield = "missing title";
+//		document.getElementById("field1").style.backgroundColor = "#FFEEFF";
+	}
+
+	if (document.add_portfolio_form.date_entered.value == ""){
+		myerror="yes";
+		whichfield = "missing date";
+
+
+//		document.getElementById("field2").style.backgroundColor = "#FFEEFF";
+	}
+
+
+if (myerror =="yes") {
+		document.getElementById("errormsg").innerHTML = "&nbspPlease correct the " + whichfield;
+		console.log('has an error');
+	}
+}
+
+	</script>
+
+
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

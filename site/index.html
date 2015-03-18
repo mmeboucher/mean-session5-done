@@ -1,0 +1,259 @@
+<!DOCTYPE html>
+<html ng-app>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="initial-scale=1.0">
+
+  <title>Drunken Pirate Portfolio  3/18/15 M. Boucher</title>
+  <link rel="stylesheet" href="css/style.css">
+  <script src="js/modernizr.js"></script>
+  <script type="text/javascript" src="js/angular.min.js"></script>
+
+
+<style type="text/css">
+
+ /* body { padding:50px; }*/
+
+  .panel-primary, .panel-default { width:50%; 
+    padding-left: 10%;
+    margin-left: 5%;  /*  float:left;  */
+    margin-right:2%; 
+    min-height:180px;
+  }
+
+
+.btn {
+  background-color: #fad46b;
+  border-radius: 10%;
+}
+
+  .panel-name {
+    background-color: d6e9c6;
+    padding-left: 15px;
+  }
+
+  .cl { clear:both; 
+      background-color: #e1eef3;
+      margin-top: -20px;
+      padding-bottom: 20px;
+}
+
+  input[type=text], textarea {
+    padding: 3px;
+    border-radius: 4px;
+    border: 1px solid rgba(0,0,0,0.2)
+  }
+  textarea { width: 100%; }
+
+  #errormsg {
+    color: red;
+  }
+
+  </style>
+
+
+
+</head>
+
+<body ng-controller="PortfolioListController">
+
+<!--
+<body ng-init="portfolios = [
+    {name: 'vessel1309', title: 'Call of Booty', date: '2013-09-01', description: 'Arrrgh mateys! This be the finest vessel sailing these seas that yer eyes ever laid sight on. Arrrgh.', imageurl: 'images/drunkenPirate_thumb3.png' },
+    {name: 'innocents1404', title: 'The Sack of the Innocents', date: '2014-04-15', description: 'This be a detail of the sacking of the innocents where I played an important role as business analyst and in implementation.', imageurl: 'images/drunkenPirate_thumb2.png' },
+    {name: 'firstmate1210', title: 'Pipe and First Mate', date: '2012-10-01', description: 'After a hard day of lootin\' and shootin\' I like to relax with my best mates and tally up the days booty.', imageurl: 'images/drunkenPirate_thumb1.png' }
+    ]"
+>
+-->
+
+
+  <main class="wrap group">
+
+    <aside class="sidebar">
+     <div class="my-info">
+       <img src="images/drunkenPirate_avatar.png" alt="drunken pirate" class="portfolio-image">
+       <h1>Cap'n Seymour Butts</h1>
+       <h2>Experienced pirate and leader of the salty seamen operating in the Carribean and South Seas.</h2>
+       <div class="social group">
+        <a href="#" title="Dribble"><span aria-hidden="true" data-icon="&#xE000;"></span></a>
+        <a href="#" title="Poopy"><span aria-hidden="true" data-icon="&#xE001;"></span></a>
+        <a href="#" title="Facebook"><span aria-hidden="true" data-icon="&#xE002;"></span></a>
+        <a href="#" title="Github"><span aria-hidden="true" data-icon="&#xE003;"></span></a>
+      </div>
+    </div>
+
+    <div class="searchbar">
+      <input ng-model="searchFor">
+    </div>
+
+    <nav class="menus">
+     <h3 class="work">Work</h3>
+     <ul>
+      <li><a href="#" class="current-menu-item">Call of Booty</a></li>
+      <li><a href="#">The Sack of the Innocents</a></li>
+      <li><a href="#">Pipe and First Mate</a></li>
+    </ul>
+
+    <h3 class="about">About</h3>
+    <ul>
+      <li><a href="#">Skills</a></li>
+      <li><a href="#">Experience</a></li>
+      <li><a href="#">Testimonials</a></li>
+    </ul>
+
+    <h3 class="contact">Contact</h3>
+    <ul>
+      <li><a href="#">Address</a></li>
+      <li><a href="#">Phone</a></li>
+      <li><a href="#">Social Networks</a></li>
+    </ul>
+  </nav>
+</aside>
+
+<div class="content">
+
+  <article class="portfolio-item group" ng-repeat="portfolio in portfolios | filter:searchFor">
+    <header class="portfolio-info">
+      <div class="title">
+        {{ portfolio.title }}
+      </div>
+      <div class="date">
+        {{ portfolio.date }}
+      </div>
+      <div class="description">
+        {{ portfolio.description }}
+      </div>
+      <div class="name">
+        {{ portfolio.name }}
+      </div>
+    </header>
+    <figure class="portfolio-image">
+      <img ng-src="{{ portfolio.imageurl }}" alt="{{ portfolio.title }}">
+    </figure>
+  </article>
+
+
+<div class="cl">
+
+    <div class="panel panel-default">
+      <br><br>
+      <h3>Add a Portfolio</h3> 
+
+      <form name="add_portfolio_form" novalidate>
+        <div class="panel-heading">
+         <div style="float:left">
+            <input 
+            ng-required="true"
+            ng-minlength="10"
+            type="date" 
+            name="date_entered"
+
+            placeholder="yyyy/mm/dd" 
+            size="11" 
+            ng-model="adding_portfolio.date" />
+
+          </div>
+          <input type="text" placeholder=" title" name="title" size="35"  ng-maxlength="35" ng-model="adding_portfolio.title" />
+        </div>
+
+        <div class="panel-body">
+          <textarea placeholder="description" rows="4" ng-model="adding_portfolio.description" ></textarea>
+
+          <input type="text" placeholder="name" size="30" ng-model="adding_portfolio.name" />
+
+          <input type="text" placeholder="image url" size="30" ng-model="adding_portfolio.imageurl" />
+        </div>
+        <br>
+        <button ng-click="addPortfolio(adding_portfolio)" class="btn btn-success">Add Portfolio</button>
+        <br>
+
+            <p id ="errormsg">&nbsp </p>
+<br>
+      </form>
+
+      <p class="cl">There are {{ portfolios.length }} portfolios available.</p>
+
+    </div><!--end of panel-->
+
+  </div><!--end of cl-->
+
+</div> <!--end of content-->
+
+
+</main><!--end of wrap group-->
+
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script src="js/infinite.js"></script>
+<script src="js/app.js"></script>
+
+
+
+<script type="text/javascript">
+  function PortfolioListController( $scope ){
+
+    $scope.portfolios = [
+    {name: 'vessel1309', title: 'Call of Booty', date: '2013-09-01', description: 'Arrrgh mateys! This be the finest vessel sailing these seas that yer eyes ever laid sight on. Arrrgh.', imageurl: '../site/images/drunkenPirate_thumb3.png' },
+
+    {name: 'innocents1404', title: 'The Sack of the Innocents', date: '2014-04-15', description: 'This be a detail of the sacking of the innocents where I played an important role as business analyst and in implementation.', imageurl: '../site/images/drunkenPirate_thumb2.png' },
+
+    {name: 'firstmate1210', title: 'Pipe and First Mate', date: '2012-10-01', description: 'After a hard day of lootin\' and shootin\' I like to relax with my best mates and tally up the days booty.', imageurl: '../site/images/drunkenPirate_thumb1.png' }
+    ];
+
+    $scope.addPortfolio = function( new_portfolio ){
+      myerror = "";
+      validate();
+
+      if (myerror == "") {
+        console.log('creating new portfolio');
+
+        $scope.portfolios.push( new_portfolio );
+        $scope.adding_portfolio = {};
+      };
+    };
+
+  };
+
+
+function validate() {
+  var whichfield = "";
+  document.getElementById("errormsg").innerHTML = "";
+  var titletest = document.add_portfolio_form.title.value;      
+    if (! titletest.match(/([A-z]+)/) ) {         
+    myerror="yes";
+    whichfield = "missing title";
+//    document.getElementById("field1").style.backgroundColor = "#FFEEFF";
+  }
+
+  if (document.add_portfolio_form.date_entered.value == ""){
+    myerror="yes";
+    whichfield = "missing date";
+
+
+//    document.getElementById("field2").style.backgroundColor = "#FFEEFF";
+  }
+
+
+if (myerror =="yes") {
+    document.getElementById("errormsg").innerHTML = "&nbspPlease correct the " + whichfield;
+    console.log('has an error');
+  }
+}
+
+  </script>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
