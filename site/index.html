@@ -43,7 +43,58 @@
     border-radius: 4px;
     border: 1px solid rgba(0,0,0,0.2)
   }
-  textarea { width: 100%; }
+
+input, textarea {
+  font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  background-color:#fff;
+  border:1px solid #ccc;
+  font-size:16px;
+  width:100%;
+  min-height:30px;
+  display:block;
+  margin-bottom:16px;
+  margin-top:8px;
+  
+  -webkit-border-radius:5px;
+  -moz-border-radius:5px;
+  border-radius:5px;
+  
+  -webkit-transition: all 0.5s ease-in-out;
+  -moz-transition: all 0.5s ease-in-out;
+  transition: all 0.5s ease-in-out;
+}
+
+
+input:focus, textarea:focus {
+  -webkit-box-shadow:0 0 25px #ccc;
+  -moz-box-shadow:0 0 25px #ccc;
+  box-shadow:0 0 25px #ccc;
+  
+  -webkit-transform: scale(1.05);
+  -moz-transform: scale(1.05);
+  transform: scale(1.05);
+}
+
+
+input:not(:focus), textarea:not(:focus) {
+  opacity:0.5;
+}
+
+input:required, textarea:required {
+  background:url("../other/html5 forms/asterisk_orange.png") no-repeat right top;           
+}
+
+input:valid, textarea:valid {
+  background:url("../other/html5 forms/tick.png") no-repeat right top;      
+}   
+
+input:focus:invalid, textarea:focus:invalid {
+  background:url("../other/html5 forms/cancel.png") no-repeat right top;            
+}
+
+  textarea { width: 100%; 
+      min-height:200px;
+}
 
   #errormsg {
     color: red;
@@ -144,6 +195,7 @@
          <div style="float:left">
             <input 
             ng-required="true"
+            required
             ng-minlength="10"
             type="date" 
             name="date_entered"
@@ -153,13 +205,13 @@
             ng-model="adding_portfolio.date" />
 
           </div>
-          <input type="text" placeholder=" title" name="title" size="35"  ng-maxlength="35" ng-model="adding_portfolio.title" />
+          <input type="text" required placeholder=" title" name="title" size="35"  ng-maxlength="35" ng-model="adding_portfolio.title" />
         </div>
 
         <div class="panel-body">
-          <textarea placeholder="description" rows="4" ng-model="adding_portfolio.description" ></textarea>
+          <textarea required placeholder="description" name="description" rows="4" ng-model="adding_portfolio.description" ></textarea>
 
-          <input type="text" placeholder="name" size="30" ng-model="adding_portfolio.name" />
+          <input required type="text" placeholder="name" name="name" size="30" ng-model="adding_portfolio.name" />
 
           <input type="text" placeholder="image url" size="30" ng-model="adding_portfolio.imageurl" />
         </div>
@@ -216,25 +268,37 @@
 
 function validate() {
   var whichfield = "";
+  var whichfield1 = "";
+  var whichfield2 = "";
+  var whichfield3 = "";
   document.getElementById("errormsg").innerHTML = "";
-  var titletest = document.add_portfolio_form.title.value;      
+ 
+  if (document.add_portfolio_form.date_entered.value == ""){
+    myerror="yes";
+    whichfield = "-date";
+  }
+
+ var titletest = document.add_portfolio_form.title.value;      
     if (! titletest.match(/([A-z]+)/) ) {         
     myerror="yes";
-    whichfield = "missing title";
+    whichfield1 = "-title";
 //    document.getElementById("field1").style.backgroundColor = "#FFEEFF";
   }
 
-  if (document.add_portfolio_form.date_entered.value == ""){
+    if (document.add_portfolio_form.description.value == ""){
     myerror="yes";
-    whichfield = "missing date";
-
-
-//    document.getElementById("field2").style.backgroundColor = "#FFEEFF";
+    whichfield2 = "-description";
   }
 
 
-if (myerror =="yes") {
-    document.getElementById("errormsg").innerHTML = "&nbspPlease correct the " + whichfield;
+  if (document.add_portfolio_form.name.value == ""){
+    myerror="yes";
+    whichfield3 = "-name";
+  }
+
+
+  if (myerror =="yes") {
+    document.getElementById("errormsg").innerHTML = "&nbspPlease enter the " + whichfield + " " + whichfield1 + " " + whichfield2 + " " + whichfield3 ;
     console.log('has an error');
   }
 }

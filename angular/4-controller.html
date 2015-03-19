@@ -21,11 +21,69 @@
 		padding-left: 15px;
 	}
 	.cl { clear:both; }
+
 	input[type=text], textarea {
 		padding: 3px;
 		border-radius: 4px;
 		border: 1px solid rgba(0,0,0,0.2)
 	}
+
+input, textarea {
+	font-family: "Helvetica Neue", Helvetica, Arial, sans-serif;
+	background-color:#fff;
+	border:1px solid #ccc;
+	font-size:16px;
+	width:100%;
+	min-height:30px;
+	display:block;
+	margin-bottom:16px;
+	margin-top:8px;
+	
+	-webkit-border-radius:5px;
+	-moz-border-radius:5px;
+	border-radius:5px;
+	
+	-webkit-transition: all 0.5s ease-in-out;
+	-moz-transition: all 0.5s ease-in-out;
+	transition: all 0.5s ease-in-out;
+}
+
+textarea {
+		min-height:200px;
+}
+
+input:focus, textarea:focus {
+	-webkit-box-shadow:0 0 25px #ccc;
+	-moz-box-shadow:0 0 25px #ccc;
+	box-shadow:0 0 25px #ccc;
+	
+	-webkit-transform: scale(1.05);
+	-moz-transform: scale(1.05);
+	transform: scale(1.05);
+}
+
+
+input:not(:focus), textarea:not(:focus) {
+	opacity:0.5;
+}
+
+input:required, textarea:required {
+/*	background:url("../other/html5 forms/asterisk_orange.png") no-repeat 280px 7px; */				
+	background:url("../other/html5 forms/asterisk_orange.png") no-repeat right top;						
+}
+
+input:valid, textarea:valid {
+/*	background:url("../other/html5 forms/tick.png") no-repeat 280px 5px;	*/		
+	background:url("../other/html5 forms/tick.png") no-repeat right top;			
+}		
+
+input:focus:invalid, textarea:focus:invalid {
+/*	background:url("../other/html5 forms/cancel.png") no-repeat 280px 7px;	*/					
+	background:url("../other/html5 forms/cancel.png") no-repeat right top;						
+}
+
+
+
 	textarea { width: 100%; }
 
 	</style>
@@ -55,7 +113,7 @@
 				<div class="panel-heading">
 					<div style="float:right">
 
-						<input  validate
+						<input 
 						ng-required="true"
 						required
 						ng-minlength="10"
@@ -78,15 +136,15 @@
 -->
 		
 					</div>
-					<input type="text" placeholder="title" size="20" 						maxlength="30" name="title"
+					<input type="text" placeholder="title" size="20" 						maxlength="30" name="title" required
 						ng-model="adding_portfolio.title" />
 				</div>
 
 
 				<div class="panel-body">
-					<textarea placeholder="description" rows="4" ng-model="adding_portfolio.description" ></textarea>
+					<textarea required placeholder="description" rows="4" ng-model="adding_portfolio.description" ></textarea>
 
-					<input type="text" placeholder="name" size="15" ng-model="adding_portfolio.name" />
+					<input type="text"  required placeholder="name" size="15" ng-model="adding_portfolio.name" />
 
 					<input type="text" placeholder="image url" size="30" ng-model="adding_portfolio.imageurl" />
 				</div>
